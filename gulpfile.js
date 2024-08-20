@@ -29,6 +29,7 @@ import {deleteAsync} from 'del'
 // import tailwindcss from 'tailwindcss'
 import tailwindcss from 'tailwindcss'
 
+
 function browsersync() {
 	browserSync.init({
 		server: {
@@ -87,7 +88,7 @@ function styles() {
 		.pipe(eval(`${preprocessor}glob`)())
 		.pipe(eval(preprocessor)({ 'include css': true }))
 		.pipe(postCss([
-			tailwindcss('./tailwind.config.js'), // Добавляем Tailwind CSS
+			tailwindcss('tailwind.config.js'), // Добавляем Tailwind CSS
 			autoprefixer({ grid: 'autoplace' }),
 			cssnano({ preset: ['default', { discardComments: { removeAll: true } }] })
 		]))
@@ -142,6 +143,8 @@ function deploy() {
 
 function startwatch() {
 	watch(`app/styles/${preprocessor}/**/*`, { usePolling: true }, styles)
+	watch('tailwind.config.js', { usePolling: true }, styles) // Наблюдение за изменениями в tailwind.config.js
+  	watch('app/**/*.html', { usePolling: true }, styles) // Наблюдение за изменениями в HTML
 	watch(['app/js/**/*.js', '!app/js/**/*.min.js'], { usePolling: true }, scripts)
 	watch('app/images/src/**/*', { usePolling: true }, images)
 	watch(`app/**/*.{${fileswatch}}`, { usePolling: true }).on('change', browserSync.reload)

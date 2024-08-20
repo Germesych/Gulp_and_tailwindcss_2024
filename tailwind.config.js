@@ -1,9 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./app/index.html", "/app/about.html"],
+module.exports = {
+  content: ['./app/**/*.html', './app/js/**/*.js'], // Пути к вашим файлам
   theme: {
     extend: {},
   },
   plugins: [],
 }
-
